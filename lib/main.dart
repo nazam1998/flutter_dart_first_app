@@ -1,4 +1,5 @@
 import 'package:basic_exercice/main_title_text.dart';
+import 'package:basic_exercice/section_title.dart';
 import 'package:flutter/material.dart';
 import 'post.dart';
 void main() {
@@ -116,19 +117,19 @@ class BasicPage extends StatelessWidget {
             Divider(
               thickness: 2,
             ),
-            sectionTitleText("About me"),
+            SectionTitle("About me"),
             aboutRow(icon: Icons.house, text: 'Molenbeek-Saint-Jean, Belgium'),
             aboutRow(icon: Icons.work, text: 'FullStack Web Dev'),
             aboutRow(icon: Icons.favorite, text: 'Coding, Pancake'),
             Divider(
               thickness: 2,
             ),
-            sectionTitleText("Friends"),
+            SectionTitle("Friends"),
             allFriends(width / 3.5),
             Divider(
               thickness: 2,
             ),
-            sectionTitleText("My Posts"),
+            SectionTitle("My Posts"),
             allPosts(),
 
           ],
@@ -161,15 +162,6 @@ class BasicPage extends StatelessWidget {
     );
   }
 
-  Widget sectionTitleText(String text) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Text(
-        text,
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-      ),
-    );
-  }
 
   Widget aboutRow({required IconData icon, required String text}) {
     return Row(children: [
