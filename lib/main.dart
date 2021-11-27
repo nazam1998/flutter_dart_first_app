@@ -1,5 +1,6 @@
+import 'package:basic_exercice/main_title_text.dart';
 import 'package:flutter/material.dart';
-
+import 'post.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -22,6 +23,44 @@ class MyApp extends StatelessWidget {
 }
 
 class BasicPage extends StatelessWidget {
+
+  List<Post> posts = [
+    Post(
+        name: "Nazam Muhammad",
+        time: "5 minutes",
+        imagePath: "img/carnaval.jpg",
+        desc:
+        "Hello world from pancake world, loved it so much. I highly recommend it to you !!!!"
+    ),
+    Post(
+      name: "Nazam Muhammad",
+      time: "2 days",
+      imagePath: "img/mountain.jpg",
+      desc:
+      "This mountains is amazingly big, I feel like a worm in front of it",
+      likes: 38,
+
+    ),
+    Post(
+      name: "Nazam Muhammad",
+      time: "1 week",
+      imagePath: "img/work.jpg",
+      desc:
+      "Back to office after 1 year of lockdown, it feels so great to see your team face to face again !",
+      likes: 12,
+      comments: 2,
+    ),
+    Post(
+      name: "Nazam Muhammad",
+      time: "5 years",
+      imagePath: "img/playa.jpg",
+      desc:
+      "Remote Work is so cooool, here is my home office for next weeks !",
+      likes: 233,
+      comments: 89,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -51,14 +90,7 @@ class BasicPage extends StatelessWidget {
             Row(
               children: [
                 Spacer(),
-                Text(
-                  "Nazam Muhammad",
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
+                MainTitleText(data: "Nazam Muhammad"),
                 Spacer(),
               ],
             ),
@@ -97,35 +129,8 @@ class BasicPage extends StatelessWidget {
               thickness: 2,
             ),
             sectionTitleText("My Posts"),
-            post(
-                time: "5 minutes",
-                image: "img/carnaval.jpg",
-                desc:
-                    "Hello world from pancake world, loved it so much. I highly recommend it to you !!!!"
-            ),
-            post(
-              time: "2 days",
-              image: "img/mountain.jpg",
-              desc:
-                  "This mountains is amazingly big, I feel like a worm in front of it",
-              likes: 38,
+            allPosts(),
 
-            ),
-            post(
-                time: "1 week",
-                image: "img/work.jpg",
-                desc:
-                    "Back to office after 1 year of lockdown, it feels so great to see your team face to face again !",
-              likes: 12,
-              comments: 2,
-            ),post(
-                time: "5 years",
-                image: "img/playa.jpg",
-                desc:
-                    "Remote Work is so cooool, here is my home office for next weeks !",
-              likes: 233,
-              comments: 89,
-            ),
           ],
         ),
       ),
@@ -212,13 +217,15 @@ class BasicPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     );
   }
+  Column allPosts() {
+    List<Widget> postToAdd = [];
+    posts.forEach((elem){
+      postToAdd.add(post(post: elem));
+    });
 
-  Container post(
-      {required String time,
-      required String image,
-      required String desc,
-      int likes = 0,
-      int comments = 0}) {
+    return Column(children: postToAdd);
+  }
+  Container post({required Post post}) {
     return Container(
       margin: EdgeInsets.only(top: 8, right: 3, left: 3),
       padding: EdgeInsets.all(10),
@@ -232,20 +239,20 @@ class BasicPage extends StatelessWidget {
             children: [
               myProfilPic(20),
               Padding(padding: EdgeInsets.only(left: 8)),
-              Text("Nazam Muhammad"),
+              Text(post.name),
               Spacer(),
-              timeText(time)
+              timeText(post.setTime())
             ],
           ),
           Padding(
             padding: EdgeInsets.only(top: 8, bottom: 8),
             child: Image.asset(
-              image,
+              post.imagePath,
               fit: BoxFit.fitWidth,
             ),
           ),
           Text(
-            desc,
+            post.desc,
             style: TextStyle(color: Colors.blueAccent),
             textAlign: TextAlign.center,
           ),
@@ -255,9 +262,9 @@ class BasicPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Icon(Icons.favorite),
-              Text("$likes Likes"),
+              Text("${post.setLikes()} Likes"),
               Icon(Icons.message),
-              Text("$comments Comments"),
+              Text("${post.setComments()} Comments"),
             ],
           )
         ],
@@ -266,6 +273,6 @@ class BasicPage extends StatelessWidget {
   }
 
   Text timeText(String time) {
-    return Text("$time ago", style: TextStyle(color: Colors.blue));
+    return Text("$time", style: TextStyle(color: Colors.blue));
   }
 }
